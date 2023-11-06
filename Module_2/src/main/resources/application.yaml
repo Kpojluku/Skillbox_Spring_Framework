@@ -1,0 +1,4 @@
+myapp:
+  studentInit:
+    enabled: true
+    path: students.txt
