@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать</title>
+</head>
+<body>
+<h2>Редактировать контакт</h2>
+<form th:action="@{/saveEditedContact}" method="post" th:object="${contact}">
+    <input type="hidden" name="id" th:value="${contact.id}" />
+    <label for="firstName">Имя:</label>
+    <input type="text" id="firstName" name="firstName" th:value="${contact.firstName}">
+    <br>
+    <label for="lastName">Фамилия:</label>
+    <input type="text" id="lastName" name="lastName" th:value="${contact.lastName}">
+    <br>
+    <label for="email">Почта:</label>
+    <input type="email" id="email" name="email" th:value="${contact.email}">
+    <br>
+    <label for="phone">Телефон:</label>
+    <input type="text" id="phone" name="phone" th:value="${contact.phone}">
+    <br>
+    <input type="submit" value="Редактировать">
+</form>
+</body>
+</html>

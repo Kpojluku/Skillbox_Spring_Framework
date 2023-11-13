@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список контактов</title>
+</head>
+<body>
+<h1>Список контактов</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Почта</th>
+        <th>Телефон</th>
+    </tr>
+    <tr th:each="contact : ${contacts}">
+        <td th:text="${contact.id}"></td>
+        <td th:text="${contact.firstName}"></td>
+        <td th:text="${contact.lastName}"></td>
+        <td th:text="${contact.email}"></td>
+        <td th:text="${contact.phone}"></td>
+        <td>
+<!--            <form th:action="@{/editContact}" th:object="${contactt}" method="post">-->
+<!--                <button type="submit">Редактировать</button>-->
+<!--            </form>-->
+            <form th:action="@{/editContact}" method="post">
+                <input type="hidden" name="id" th:value="${contact.id}" />
+                <button type="submit">Редактировать</button>
+            </form>
+            <form th:action="@{/deleteContact}" method="post">
+                <input type="hidden" name="id" th:value="${contact.id}" />
+                <button type="submit">Удалить</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<h2>Добавить новый контакт</h2>
+<form th:action="@{/addContact}" method="post" th:object="${contact}">
+    <label for="firstName">Имя:</label>
+    <input type="text" id="firstName" name="firstName" th:field="*{firstName}">
+    <br>
+    <label for="lastName">Фамилия:</label>
+    <input type="text" id="lastName" name="lastName">
+    <br>
+    <label for="email">Почта:</label>
+    <input type="email" id="email" name="email">
+    <br>
+    <label for="phone">Телефон:</label>
+    <input type="text" id="phone" name="phone">
+    <br>
+    <input type="submit" value="Добавить">
+</form>
+</body>
+</html>
