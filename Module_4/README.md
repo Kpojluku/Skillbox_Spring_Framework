@@ -37,7 +37,7 @@
 
 1. Запустите докер контейнер в папке docker: <b>docker-compose up</b> (должен быть запущен docker daemon и не занят порт 5432)
 2. Выполните команду: <b>./gradlew build</b>
-3. Запустите приложение: <b>java -jar .\build\libs\Module_3.jar</b>
+3. Запустите приложение: <b>java -jar .\build\libs\Module_4.jar</b>
 
 ---
 
