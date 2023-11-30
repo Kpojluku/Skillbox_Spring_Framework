@@ -11,7 +11,7 @@ import ru.goltsov.education.model.User;
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
     @Override
-    @EntityGraph(attributePaths = {"comments"})
+    @EntityGraph(attributePaths = {"comments"}) // Указывает, какие связанные сущности будут загружены из базы данных
     Page<User> findAll(Pageable pageable);
 
 }

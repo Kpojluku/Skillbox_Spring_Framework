@@ -62,9 +62,7 @@ public class NewsService {
     }
 
     public News update(News news) {
-
-        News newsForUpdate = newsRepository.findById(news.getId()).orElseThrow(() ->
-                new EntityNotFoundException(MessageFormat.format("Новость с ID {0} не найдена!", news.getId())));
+        News newsForUpdate = findById(news.getId());
 
         BeenUtils.copyNonNullProperties(news, newsForUpdate);
 

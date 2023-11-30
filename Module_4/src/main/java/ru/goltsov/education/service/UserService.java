@@ -32,7 +32,7 @@ public class UserService {
     public User update(User updatedUser) {
         User user = findById(updatedUser.getId());
 
-        BeenUtils.copyNonNullProperties(user, updatedUser);
+        BeenUtils.copyNonNullProperties(updatedUser, user);
 
         return save(user);
 

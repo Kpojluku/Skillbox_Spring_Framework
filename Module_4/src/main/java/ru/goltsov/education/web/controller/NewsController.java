@@ -78,7 +78,8 @@ public class NewsController {
         return ResponseEntity.ok(newsMapper.newsListToNewsListResponse(newsService.findAll(pageable).stream().toList()));
     }
 
-    @GetMapping("/filter")
+    @PostMapping("/filter")
+//    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<NewsListResponse> findAllWithFilter(@RequestBody @Valid NewsFilterRequest filterRequest) {
         return ResponseEntity.ok(newsMapper.newsListToNewsListResponse(newsService.findAllWithFilter(filterRequest).stream().toList()));
     }

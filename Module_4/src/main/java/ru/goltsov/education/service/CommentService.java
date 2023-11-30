@@ -28,9 +28,10 @@ public class CommentService {
 
 
     public List<Comment> findByNewsId(long newsId) {
-
         return commentRepository.findAll(CommentSpecification.byNewsId(newsId));
 
+        // или так
+//        return commentRepository.findAllByNewsId(newsId);
     }
 
     public void delete(Comment commentForDelete) {
@@ -47,13 +48,17 @@ public class CommentService {
 
     }
 
-    private boolean validate(long upsertCommentRequest, long upsertCommentRequest1) {
-        Optional<Comment> commentOptional = commentRepository.findById(upsertCommentRequest);
+    private boolean validate(long commentId, long userId) {
+        Optional<Comment> commentOptional = commentRepository.findById(commentId);
         if (commentOptional.isPresent()) {
-            return commentOptional.get().getUser().getId().equals(upsertCommentRequest1);
+            return commentOptional.get().getUser().getId().equals(userId);
         } else {
-            throw new EntityNotFoundException(MessageFormat.format("Комментарий с ID {0} не найден!", upsertCommentRequest));
+            throw new EntityNotFoundException(MessageFormat.format("Комментарий с ID {0} не найден!", commentId));
         }
+
+        //или так
+//        return commentRepository.existsByIdAndUserId(commentId, userId);
+
     }
 
     public Comment update(Comment comment) {

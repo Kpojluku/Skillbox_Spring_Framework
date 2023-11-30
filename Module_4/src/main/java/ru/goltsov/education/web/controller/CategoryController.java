@@ -22,20 +22,18 @@ public class CategoryController {
 
 
     @PostMapping
-    public ResponseEntity<CategoryResponse> addCategory(@RequestBody @Valid CategoryRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                categoryMapper.categoryToResponse(
-                        categoryService.save(
-                                categoryMapper.requestToNewsCategory(request)
-                        )
+    @ResponseStatus(HttpStatus.CREATED)
+    public CategoryResponse addCategory(@RequestBody @Valid CategoryRequest request) {
+        return categoryMapper.categoryToResponse(
+                categoryService.save(
+                        categoryMapper.requestToNewsCategory(request)
                 )
         );
     }
 
     @GetMapping
-    public ResponseEntity<NewsCategoryListResponse> findAll(Pageable pageable) {
-        return ResponseEntity.ok(
-                categoryMapper.newsCategoryListToNewsCategoryListResponse(categoryService.findAll(pageable).stream().toList())
-        );
+    @ResponseStatus(HttpStatus.OK)
+    public NewsCategoryListResponse findAll(Pageable pageable) {
+        return categoryMapper.newsCategoryListToNewsCategoryListResponse(categoryService.findAll(pageable).stream().toList());
     }
 }
