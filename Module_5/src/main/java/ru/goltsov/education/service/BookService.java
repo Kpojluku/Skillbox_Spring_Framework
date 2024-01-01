@@ -1,6 +1,8 @@
 package ru.goltsov.education.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 import ru.goltsov.education.configuration.properties.AppCacheProperties;
@@ -22,19 +24,32 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
+    private final CacheManager redisCacheManager;
 
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
 
-    @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES, beforeInvocation = true, allEntries = true)
+    @Caching(
+            evict = {
+                    @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES, beforeInvocation = true, key = "#book.name + #book.author"),
+                    @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES, beforeInvocation = true, key = "#book.category.categoryName")
+            }
+    )
     public Book save(Book book) {
         return bookRepository.save(book);
     }
 
-    @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES, beforeInvocation = true, allEntries = true)
     public void deleteById(Long id) {
-        bookRepository.deleteById(id);
+        Book bookForDelete = findById(id);
+        if (bookForDelete != null) {
+            Cache cache = redisCacheManager.getCache(AppCacheProperties.CacheNames.DATABASE_ENTITIES);
+            if (cache != null) {
+                cache.evict(bookForDelete.getName() + bookForDelete.getAuthor());
+                cache.evict(bookForDelete.getCategory().getCategoryName());
+            }
+            bookRepository.deleteById(id);
+        }
     }
 
     public Book findById(Long id) {
@@ -42,7 +57,7 @@ public class BookService {
                 new EntityNotFoundException(MessageFormat.format("Книга с ID {0} не найдена!", id)));
     }
 
-//    @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES, beforeInvocation = true, allEntries = true)
+    //    @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES, beforeInvocation = true, allEntries = true)
     @Caching(
             evict = {
                     @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES, beforeInvocation = true, key = "#updatedBook.name + #updatedBook.author"),
