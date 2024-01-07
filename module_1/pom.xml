@@ -38,7 +38,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.example.Main</mainClass>
+                            <mainClass>ru.goltsov.education.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

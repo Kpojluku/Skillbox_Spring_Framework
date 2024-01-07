@@ -1,4 +1,4 @@
-package org.example;
+package ru.goltsov.education;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;

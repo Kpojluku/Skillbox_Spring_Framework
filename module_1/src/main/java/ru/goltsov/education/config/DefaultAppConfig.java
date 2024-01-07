@@ -1,7 +1,7 @@
-package org.example.config;
+package ru.goltsov.education.config;
 
-import org.example.ContactsStorage;
-import org.example.DefaultContactsStorage;
+import ru.goltsov.education.ContactsStorage;
+import ru.goltsov.education.DefaultContactsStorage;
 import org.springframework.context.annotation.*;
 
 @Configuration

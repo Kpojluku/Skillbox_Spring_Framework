@@ -1,4 +1,4 @@
-package org.example;
+package ru.goltsov.education;
 
 import java.util.ArrayList;
 import java.util.List;
