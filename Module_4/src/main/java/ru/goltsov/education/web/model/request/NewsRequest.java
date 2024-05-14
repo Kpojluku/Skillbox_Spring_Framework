@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class NewsRequest {
 
-    private long user_id;
     private long category_id;
     @NotBlank(message = "Заголовок должен быть заполнен!")
     private String title;

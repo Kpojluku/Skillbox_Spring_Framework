@@ -43,19 +43,10 @@ public class NewsService {
         newsRepository.delete(news);
     }
 
-    public boolean validateDeleting(NewsDeleteRequest newsDeleteRequest) {
-        Optional<News> newsOptional = newsRepository.findById(newsDeleteRequest.getNews_id());
-        if (newsOptional.isPresent()) {
-            return newsOptional.get().getUser().getId().equals(newsDeleteRequest.getToken());
-        } else {
-            throw new EntityNotFoundException(MessageFormat.format("Новость с ID {0} не найдена!", newsDeleteRequest.getNews_id()));
-        }
-    }
-
-    public boolean validateChanging(UpsertNewsRequest upsertNewsRequest, long newsId) {
+    public boolean validateChanging(String userName, long newsId) {
         Optional<News> newsOptional = newsRepository.findById(newsId);
         if (newsOptional.isPresent()) {
-            return newsOptional.get().getUser().getId().equals(upsertNewsRequest.getToken());
+            return newsOptional.get().getUser().getUsername().equals(userName);
         } else {
             throw new EntityNotFoundException(MessageFormat.format("Новость с ID {0} не найдена!", newsId));
         }

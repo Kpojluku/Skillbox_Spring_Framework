@@ -24,8 +24,8 @@ public interface NewsMapper {
     @Mapping(source = "newsId", target = "id")
     News requestToNews(UpsertNewsRequest request, long newsId);
 
-    default News requestToNews(NewsRequest request, UserService userService, CategoryService categoryService) {
-        User user = userService.findById(request.getUser_id());
+    default News requestToNews(NewsRequest request, String userName, UserService userService, CategoryService categoryService) {
+        User user = userService.findByUsername(userName);
         NewsCategory newsCategory = categoryService.findById(request.getCategory_id());
 
         News news = new News();

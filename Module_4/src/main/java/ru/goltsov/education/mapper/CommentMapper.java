@@ -14,7 +14,7 @@ import static org.mapstruct.ReportingPolicy.IGNORE;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = IGNORE)
 public interface CommentMapper {
 
-    Comment commentRequestToComment(CommentRequest commentRequest);
+    Comment commentRequestToComment(CommentRequest commentRequest, String userName);
 
     CommentResponse commentToCommentResponse(Comment comment);
 

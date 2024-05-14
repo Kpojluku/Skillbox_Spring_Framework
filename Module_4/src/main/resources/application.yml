@@ -16,6 +16,9 @@ spring:
 app:
   check-api-client-header: false
   client-api-key: 12345
+  security:
+    type: db
+
 server:
   port: 8080
   host: http://localhost

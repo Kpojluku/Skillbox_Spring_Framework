@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class UpsertNewsRequest extends NewsChangeRequest{
+public class UpsertNewsRequest {
 
     private String title;
     @NotBlank(message = "Содержание должно быть заполнено!")

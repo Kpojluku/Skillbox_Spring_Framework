@@ -17,9 +17,9 @@ public abstract class CommentMapperDelegate implements CommentMapper {
     private UserService userService;
 
     @Override
-    public Comment commentRequestToComment(CommentRequest commentRequest) {
+    public Comment commentRequestToComment(CommentRequest commentRequest, String userName) {
         return Comment.builder()
-                .user(userService.findById(commentRequest.getUser_id()))
+                .user(userService.findByUsername(userName))
                 .news(newsService.findById(commentRequest.getNews_id()))
                 .comment(commentRequest.getComment())
                 .build();

@@ -23,6 +23,9 @@ public class User {
     private Long id;
     private String name;
 
+    private String username;
+    private String password;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @Builder.Default
@@ -32,6 +35,13 @@ public class User {
     @ToString.Exclude
     @Builder.Default
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Builder.Default
+    private List<Role> roles = new ArrayList<>();
+
 
 
 }

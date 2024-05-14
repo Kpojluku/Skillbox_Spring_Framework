@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.goltsov.education.mapper.CategoryMapper;
 import ru.goltsov.education.service.CategoryService;
@@ -23,6 +24,7 @@ public class CategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public CategoryResponse addCategory(@RequestBody @Valid CategoryRequest request) {
         return categoryMapper.categoryToResponse(
                 categoryService.save(
@@ -33,6 +35,7 @@ public class CategoryController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN', 'ROLE_MODERATOR')")
     public NewsCategoryListResponse findAll(Pageable pageable) {
         return categoryMapper.newsCategoryListToNewsCategoryListResponse(categoryService.findAll(pageable).stream().toList());
     }

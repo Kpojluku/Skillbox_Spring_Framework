@@ -38,28 +38,17 @@ public class CommentService {
         commentRepository.delete(commentForDelete);
     }
 
-    public boolean validateDeleting(CommentDeleteRequest commentDeleteRequest) {
-        return validate(commentDeleteRequest.getComment_id(), commentDeleteRequest.getToken());
-
-    }
-
-    public boolean validateChanging(UpsertCommentRequest upsertCommentRequest) {
-        return validate(upsertCommentRequest.getComment_id(), upsertCommentRequest.getToken());
-
-    }
-
-    private boolean validate(long commentId, long userId) {
+    public boolean validateChanging(long commentId, String userName) {
         Optional<Comment> commentOptional = commentRepository.findById(commentId);
         if (commentOptional.isPresent()) {
-            return commentOptional.get().getUser().getId().equals(userId);
+            return commentOptional.get().getUser().getUsername().equals(userName);
         } else {
             throw new EntityNotFoundException(MessageFormat.format("Комментарий с ID {0} не найден!", commentId));
         }
-
         //или так
 //        return commentRepository.existsByIdAndUserId(commentId, userId);
-
     }
+
 
     public Comment update(Comment comment) {
         Comment commentForUpdate = commentRepository.findById(comment.getId()).stream().findAny().orElseThrow(
