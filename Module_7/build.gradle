@@ -23,6 +23,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.projectlombok:lombok'
     implementation 'io.projectreactor.tools:blockhound:1.0.8.RELEASE'
     implementation 'io.projectreactor:reactor-tools:3.6.1'

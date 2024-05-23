@@ -38,8 +38,10 @@ http://localhost:8080/api/users
    С телом, например:  
 {  
    "username": "name2",  
+   "password": "123",  
    "email": "gmail@ru"  
-}
+}  
+Эти данные потом используются в Basic Authorization
 
 http://localhost:8080/api/tasks
    С телом, например:  

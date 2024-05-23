@@ -11,6 +11,7 @@ import ru.goltsov.education.exception.EntityNotFoundException;
 import ru.goltsov.education.repository.TaskRepository;
 import ru.goltsov.education.repository.UserRepository;
 
+import java.security.Principal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
@@ -48,13 +49,14 @@ public class TaskService {
     }
 
 
-    public Mono<Task> save(Task task) {
+    public Mono<Task> save(Task task, Mono<Principal> principalMono) {
         task.setId(UUID.randomUUID().toString());
         task.setCreatedAt(Instant.now());
         task.setUpdatedAt(Instant.now());
 
         Mono<Task> newTaskMono = taskRepository.save(task);
-        Mono<User> authorMono = userRepository.findById(task.getAuthorId())
+//        Mono<User> authorMono = userRepository.findById(task.getAuthorId())
+        Mono<User> authorMono = principalMono.map(Principal::getName).flatMap(userRepository::findByUsername)
                 .switchIfEmpty(Mono.error(new EntityNotFoundException("Author not found")));
         Mono<User> assigneeMono = userRepository.findById(task.getAssigneeId())
                 .switchIfEmpty(Mono.error(new EntityNotFoundException("Assignee not found")));
